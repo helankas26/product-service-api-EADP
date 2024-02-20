@@ -10,6 +10,8 @@ const port = process.env.SERVER_PORT;
 const app = express();
 app.use(cors());
 
+const productRoute = require('./routes/ProductRoute');
+
 //=======================================
 const eurekaClient = new Eureka({
     instance: {
@@ -22,10 +24,13 @@ const eurekaClient = new Eureka({
             '@enabled': true
         },
         vipAddress: 'jq.test.something.com',
+        statusPageUrl: 'http://localhost:3002/info',
         dataCenterInfo: {
             '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
             name: 'MyOwn',
         },
+        registerWithEureka: true,
+        fetchRegistry: true
     },
     eureka: {
         host: '127.0.0.1',
@@ -62,3 +67,5 @@ process.on('SIGINT', () => {
         process.exit();
     });
 })
+
+app.use('/api/v1/products', productRoute);
