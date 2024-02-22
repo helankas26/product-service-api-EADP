@@ -11,6 +11,7 @@ const app = express();
 app.use(cors());
 
 const productRoute = require('./routes/ProductRoute');
+const ProductCategoryRoute = require('./routes/ProductcategoryRoute');
 
 //=======================================
 const eurekaClient = new Eureka({
@@ -69,3 +70,4 @@ process.on('SIGINT', () => {
 })
 
 app.use('/api/v1/products', productRoute);
+app.use('/api/v1/categories', ProductCategoryRoute);
